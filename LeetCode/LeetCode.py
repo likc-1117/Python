@@ -1020,7 +1020,8 @@ candidates 中的数字可以无限制重复被选取。如果至少一个所�
 candidates 中的每个数字在每个组合中只能使用一次。
 注意：解集不能包含重复的组合。 
         """
-        ans = []
+        result = []
+        
         
     def first_missing_positive(self, nums: list)->int:
         """
@@ -1225,4 +1226,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.trap(height =[8,2,8,9,0,1,7,7,9]))
+print(solute.combination_sum2(candidates = [10,1,2,7,6,5], target = 8))
