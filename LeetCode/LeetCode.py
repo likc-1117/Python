@@ -1013,6 +1013,14 @@ candidates 中的数字可以无限制重复被选取。如果至少一个所�
                 combination_s(candidates[i:], target - c, combine + [c])
         combination_s(candidates, target, [])
         return result
+    
+    def combination_sum2(self, candidates: list, target: int)->list:
+        """
+        给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+candidates 中的每个数字在每个组合中只能使用一次。
+注意：解集不能包含重复的组合。 
+        """
+        ans = []
         
     def first_missing_positive(self, nums: list)->int:
         """
@@ -1042,6 +1050,20 @@ candidates 中的数字可以无限制重复被选取。如果至少一个所�
         """
         给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
         """
+        
+        """#方法二
+        if not height:
+            return 0
+        n = len(height)
+        leftMax = [height[0]] + [0] * (n - 1)
+        for i in range(1, n):#获取左边界，i点左边的最大值
+            leftMax[i] = max(leftMax[i - 1], height[i])
+        rightMax = [0] * (n - 1) + [height[n - 1]]
+        for i in range(n - 2, -1, -1):#获取有边界，i点右边的最大值
+            rightMax[i] = max(rightMax[i + 1], height[i])
+        ans = sum(min(leftMax[i], rightMax[i]) - height[i] for i in range(n))
+        return ans"""
+        """#方法一
         trap_area = 0
         def get_aera(h:list, weight: int, min_h: int, a:int):
             left_index = 0
@@ -1072,7 +1094,7 @@ candidates 中的数字可以无限制重复被选取。如果至少一个所�
                         break
             finally:
                 return h
-        def area(height, a):
+        def area(height: list, a:int):#a表示前一次的最小值
             nonlocal trap_area
             height = init_height(height)
             # print(height)
@@ -1080,13 +1102,41 @@ candidates 中的数字可以无限制重复被选取。如果至少一个所�
                 return 
             left_index = 0
             right_index = len(height) - 1
-            min_h = min(height[left_index], height[right_index])
+            is_left_min = False
+            max_h = 0
+            if height[left_index] > height[right_index]:
+                min_h = height[right_index]
+                max_h = height[left_index]
+                is_left_min = False
+            elif height[left_index] < height[right_index]:
+                min_h = height[left_index]
+                max_h = height[right_index]
+                is_left_min = True
+            else:
+                min_h = max_h = height[left_index]
             trap_area += get_aera(height, right_index + 1, min_h, a)
             print(trap_area)
-            
+            if is_left_min:
+                while left_index <= right_index:
+                    if min_h < height[left_index]:
+                        height = height[left_index: right_index+1]
+                        left_index = 0
+                        break
+                    left_index += 1
+                if left_index > right_index:
+                    return
+            else:
+                while right_index >= 0:
+                    if height[right_index] > min_h:
+                        height = height[left_index: right_index+1]
+                        right_index = len(height) - 1
+                        break
+                    right_index -= 1
+                if right_index < 0:
+                    return
             area(height, min_h)
         area(height, 0)
-        return trap_area
+        return trap_area"""
     
     def add_string(self, num1:str, num2:str)->str:
         """
@@ -1166,41 +1216,7 @@ candidates 中的数字可以无限制重复被选取。如果至少一个所�
 两个字符串完全匹配才算匹配成功。
         """
         
-    def restore_array(self,adjacent_pairs: list)->list:
-        """
-        存在一个由 n 个不同元素组成的整数数组 nums ，但你已经记不清具体内容。好在你还记得 nums 中的每一对相邻元素。
-给你一个二维整数数组 adjacentPairs ，大小为 n - 1 ，其中每个 adjacentPairs[i] = [ui, vi] 表示元素 ui 和 vi 在 nums 中相邻。
-题目数据保证所有由元素 nums[i] 和 nums[i+1] 组成的相邻元素对都存在于 adjacentPairs 中，存在形式可能是 [nums[i], nums[i+1]] ，
-也可能是 [nums[i+1], nums[i]] 。这些相邻元素对可以 按任意顺序 出现。
-返回 原始数组 nums 。如果存在多种解答，返回 其中任意一个 即可。
-        """
-        ans = []
-        temp =[]
-        ans_l = 0
-        ans_r = 0
-        adj_index = 0
-        while adjacent_pairs:
-            item = adjacent_pairs[adj_index]
-            if ans:
-                if item[0] == ans[ans_r]:
-                    ans = ans + [item[1]]
-                elif item[0] == ans[ans_l]:
-                    ans = [item[1]] + ans
-                elif item[1] == ans[ans_l]:
-                    ans = [item[0]] + ans
-                elif item[1] == ans[ans_r]:
-                    ans = ans + [item[0]]
-                else:
-                    adj_index += 1
-                    continue
-                adj_index = 0
-            else:
-                ans.append(min(item))
-                ans.append(max(item))
-            adjacent_pairs.remove(item)
-            ans_l = 0
-            ans_r += 1
-        return ans
+
             
     
 # head = tail = ListNode(None)
