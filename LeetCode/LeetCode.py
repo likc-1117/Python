@@ -1088,9 +1088,119 @@ candidates 中的数字可以无限制重复被选取。如果至少一个所�
         area(height, 0)
         return trap_area
     
-    def restore_arry(self):
+    def add_string(self, num1:str, num2:str)->str:
         """
+        给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和
         """
+        # return str(eval('{0} + {1}'.format(num1, num2)))
+        left1 = len(num1) - 1
+        left2 = len(num2) - 1
+        ans = ''
+        carry = 0
+        temp = 0
+        x = 0
+        y = 0
+        while left1 >= 0 or left2 >= 0 or carry != 0:
+            if left1 < 0:
+                x = 0
+            else:
+                x = ord(num1[left1]) - ord('0')
+            if left2 < 0:
+                y = 0
+            else:
+                y = ord(num2[left2]) - ord('0')
+            temp = x + y + carry
+            ans += str(temp % 10)
+            carry = int(temp / 10)
+            left1 -= 1
+            left2 -= 1
+        return ans[::-1]
+            
+
+
+    def multiply(self, num1: str, num2:str)->str:
+        """
+        给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。
+        """
+        return str(eval(num1 + '*' + num2))
+            
+        
+        
+    def maximum_time(self,time: str)->str:
+        """
+        给你一个字符串 time ，格式为 hh:mm（小时：分钟），其中某几位数字被隐藏（用 ? 表示）。
+有效的时间为 00:00 到 23:59 之间的所有时间，包括 00:00 和 23:59 。
+替换 time 中隐藏的数字，返回你可以得到的最晚有效时间。
+        """
+        ans = ''
+        if time[0] == '?':
+            if time[1] >= '4' and time[1] != '?':
+                ans += '1'
+            else:
+                ans += '2'
+        else:
+            ans += time[0]
+        if time[1] == '?':
+            if time[0] == '1' or time[0] == '0':
+                ans += '9'
+            else:
+                ans += '3'
+        else:
+            ans += time[1]
+        ans += time[2]
+        if time[3] == '?':
+            ans += '5'
+        else:
+            ans += time[3]
+        if time[4] == '?':
+            ans += '9'
+        else:
+            ans += time[4]
+        return ans
+
+    def is_match(self,s:str, p:str)->bool:
+        """
+        给定一个字符串 (s) 和一个字符模式 (p) ，实现一个支持 '?' 和 '*' 的通配符匹配。
+'?' 可以匹配任何单个字符。
+'*' 可以匹配任意字符串（包括空字符串）。
+两个字符串完全匹配才算匹配成功。
+        """
+        
+    def restore_array(self,adjacent_pairs: list)->list:
+        """
+        存在一个由 n 个不同元素组成的整数数组 nums ，但你已经记不清具体内容。好在你还记得 nums 中的每一对相邻元素。
+给你一个二维整数数组 adjacentPairs ，大小为 n - 1 ，其中每个 adjacentPairs[i] = [ui, vi] 表示元素 ui 和 vi 在 nums 中相邻。
+题目数据保证所有由元素 nums[i] 和 nums[i+1] 组成的相邻元素对都存在于 adjacentPairs 中，存在形式可能是 [nums[i], nums[i+1]] ，
+也可能是 [nums[i+1], nums[i]] 。这些相邻元素对可以 按任意顺序 出现。
+返回 原始数组 nums 。如果存在多种解答，返回 其中任意一个 即可。
+        """
+        ans = []
+        temp =[]
+        ans_l = 0
+        ans_r = 0
+        adj_index = 0
+        while adjacent_pairs:
+            item = adjacent_pairs[adj_index]
+            if ans:
+                if item[0] == ans[ans_r]:
+                    ans = ans + [item[1]]
+                elif item[0] == ans[ans_l]:
+                    ans = [item[1]] + ans
+                elif item[1] == ans[ans_l]:
+                    ans = [item[0]] + ans
+                elif item[1] == ans[ans_r]:
+                    ans = ans + [item[0]]
+                else:
+                    adj_index += 1
+                    continue
+                adj_index = 0
+            else:
+                ans.append(min(item))
+                ans.append(max(item))
+            adjacent_pairs.remove(item)
+            ans_l = 0
+            ans_r += 1
+        return ans
             
     
 # head = tail = ListNode(None)
