@@ -1,0 +1,41 @@
+os.set is \
+os.altsep is /
+os.curdir is .
+os.defpath  is .;C:\bin
+os.devnull is  nul
+os.environ is environ({'PROGRAMDATA': 'C:\\ProgramData', 'JAVA_HOME': 'C:\\Program Files\\Java\\jdk1.8.0_92', 'LOCALAPPDATA': 'C:\\Users\\asus\\AppData\\Local', 'JAI_SDK_DATA': 'C:\\Program Files\\JAI\\SDK\\Data', 'TMP': 'C:\\Users\\asus\\AppData\\Local\\Temp', 'JAI_SDK_INCLUDE': 'C:\\Program Files\\JAI\\SDK\\library\\CPP\\include', 'GENICAM_LOG_CONFIG_V2_4_ARCH': 'D:\\Program Files\\SMARTEKvision\\GigEVisionSDK\\GenICam_v2_4\\log\\config\\DefaultLogging.properties', 'VS120COMNTOOLS': 'C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\Common7\\Tools\\', 'JAI_SDK_LIB': 'C:\\Program Files\\JAI\\SDK\\library\\CPP\\lib\\Win32_i86', 'SYSTEMROOT': 'C:\\WINDOWS', 'ANDROID_HOME': 'E:\\android-sdk-windows', 'JAI_GENICAM_CLPROTOCOL': 'C:\\Program Files\\JAI\\SDK\\bin\\CLProtocol', 'JAI_SDK_DEBUG': 'FALSE', 'VS110COMNTOOLS': 'C:\\Program Files (x86)\\Microsoft Visual Studio 11.0\\Common7\\Tools\\', 'APPNAVISETUPMAC': '6C-71-D9-6B-6D-D0', 'PROCESSOR_LEVEL': '6', 'NIEXTCCOMPILERSUPP': 'C:\\Program Files (x86)\\National Instruments\\Shared\\ExternalCompilerSupport\\C\\', 'PUBLIC': 'C:\\Users\\Public', 'LSERVRC': 'C:\\ProgramData\\HP\\Functional testing\\License\\lservrc', 'USERNAME': 'asus', 'APPDATA': 'C:\\Users\\asus\\AppData\\Roaming', 'PROGRAMFILES(X86)': 'C:\\Program Files (x86)', 'NUMBER_OF_PROCESSORS': '4', 'GENICAM_ROOT_V2_4_ARCH': 'D:\\Program Files\\SMARTEKvision\\GigEVisionSDK\\GenICam_v2_4', 'JAI_SDK_BIN_64': 'C:\\Program Files\\JAI\\SDK\\bin', 'VXIPNPPATH': 'C:\\Program Files (x86)\\IVI Foundation\\VISA\\', 'SYSTEMDRIVE': 'C:', 'FP_NO_HOST_CHECK': 'NO', 'CLASSPATH': '.;C:\\Program Files\\Java\\jdk1.8.0_92\\lib;C:\\Program Files\\Java\\jdk1.8.0_92\\lib\\tools.jar;E:\\apache-ant-1.9.4\\lib;C:\\Program Files\\Java\\jdk1.8.0_92/jre/lib/rt.jar;D:\\Program Files\\apache-jmeter-3.0\\lib\\ext\\ApacheJMeter_core.jar;D:\\Program Files\\apache-jmeter-3.0\\lib\\jorphan.jar;D:\\Program Files\\apache-jmeter-3.0\\lib\\logkit-2.0.jar;', 'VS100COMNTOOLS': 'D:\\Program Files (x86)\\Microsoft Visual Studio 10.0\\Common7\\Tools\\', 'OS': 'Windows_NT', 'GENICAM_CACHE_JAI_V2_4': 'C:\\Program Files\\JAI\\SDK\\GenICam\\xml\\Cache', 'USERDOMAIN': 'HOME', 'JAI_SDK_BIN': 'C:\\Program Files\\JAI\\SDK\\bin\\Win32_i86', 'JMETER_HOME': 'D:\\Program Files\\apache-jmeter-3.0', 'COMPUTERNAME': 'HOME', 'USERDOMAIN_ROAMINGPROFILE': 'HOME', 'FPS_BROWSER_USER_PROFILE_STRING': 'Default', 'COMMONPROGRAMFILES(X86)': 'C:\\Program Files (x86)\\Common Files', 'PROGRAMW6432': 'C:\\Program Files', 'PYCHARM_HOSTED': '1', 'ALLUSERSPROFILE': 'C:\\ProgramData', 'VXIPNPPATH64': 'C:\\Program Files\\IVI Foundation\\VISA\\', 'AQTIME8INSTALL': 'C:\\Program Files (x86)\\SmartBear\\AQtime 8', 'JAI_SDK_LIB_64': 'C:\\Program Files\\JAI\\SDK\\library\\CPP\\lib\\Win64_x64', 'SESSIONNAME': 'Console', 'PYTHONPATH': 'E:\\MobotMaterial\\NFC指纹测试;F:\\likecan\\每日小程序\\Pyton学习;E:\\MobotMaterial\\侧键夹具\\ToolsTest;E:\\MobotMaterial\\TBpythonScript\\pythonScript;C:\\Python27', 'HOMEPATH': '\\Users\\asus', 'VS140COMNTOOLS': 'D:\\Program Files (x86)\\VisualStudio2015\\Common7\\Tools\\', 'SAPERA_GENICAM_ROOT': 'C:\\Program Files\\Teledyne DALSA\\Sapera\\GenICam_2_4', 'PYTHONIOENCODING': 'UTF-8', 'COMMONPROGRAMFILES': 'C:\\Program Files\\Common Files', 'JAISDK_ROOT': 'C:\\Program Files\\JAI\\SDK\\', 'CAMEXPERTDIR': 'C:\\Program Files\\Teledyne DALSA\\Sapera\\CamExpert', 'PSMODULEPATH': 'C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules\\;C:\\Program Files (x86)\\Microsoft SQL Server\\110\\Tools\\PowerShell\\Modules\\', 'WINDIR': 'C:\\WINDOWS', 'ONEDRIVE': 'C:\\Users\\asus\\OneDrive', 'GENICAM_CACHE_V2_4_ARCH': 'C:\\Users\\asus\\AppData\\Roaming\\SMARTEK Vision\\GenICam_v2_4\\cache', 'PROGRAMFILES': 'C:\\Program Files', 'COMSPEC': 'C:\\WINDOWS\\system32\\cmd.exe', 'LOGONSERVER': '\\\\HOME', 'RANOREXPATH': 'D:\\Program Files (x86)\\Ranorex 5.4\\', 'XTIUMCLPX4DIR': 'C:\\Program Files\\Teledyne DALSA\\Xtium-CL PX4', 'CAMERA_SDK_PATH': 'D:\\Program Files\\SMARTEKvision\\GigEVisionSDK', 'CONFIGSETROOT': 'C:\\WINDOWS\\ConfigSetRoot', 'FPS_BROWSER_APP_PROFILE_STRING': 'Internet Explorer', 'USERPROFILE': 'C:\\Users\\asus', 'PATH': 'C:\\Python35\\Scripts\\;C:\\Python35\\;C:\\Program Files\\Java\\jdk1.8.0_92\\bin;C:\\Program Files\\Java\\jdk1.8.0_92\\jre\\bin;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\Python27\\Scripts\\;C:\\Python27\\;C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files (x86)\\Intel\\OpenCL SDK\\2.0\\bin\\x86;C:\\Program Files (x86)\\Intel\\OpenCL SDK\\2.0\\bin\\x64;E:\\adb;C:\\Program Files (x86)\\Microsoft SQL Server\\100\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\100\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\100\\DTS\\Binn\\;C:\\Program Files\\TortoiseSVN\\bin;E:\\apache-ant-1.9.4\\bin;E:\\apache-ant-1.9.4\\lib;C:\\Program Files (x86)\\Windows Live\\Shared;D:\\IBM Rational PurifyPlus-Evaluation\\Common;C:\\Program Files (x86)\\Windows Kits\\8.0\\Windows Performance Toolkit\\;C:\\Program Files\\JAI\\SDK\\bin;C:\\Program Files\\JAI\\SDK\\bin\\Win32_i86;C:\\Program Files\\JAI\\SDK\\GenICam\\bin\\Win64_x64;C:\\Program Files\\JAI\\SDK\\GenICam\\bin\\Win32_i86;C:\\Program Files\\Microsoft SQL Server\\120\\Tools\\Binn\\;C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\;C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\;D:\\Program Files\\SMARTEKvision\\GigEVisionSDK\\bin;D:\\Program Files\\SMARTEKvision\\GigEVisionSDK\\GenICam_v2_4\\bin\\Windows;D:\\Program Files\\SMARTEKvision\\GigEVisionSDK\\GenICam_v2_4\\bin\\Windows\\GenApi\\Generic;C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\110\\Tools\\Binn\\ManagementStudio\\;C:\\Program Files (x86)\\Microsoft SQL Server\\110\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\110\\DTS\\Binn\\;C:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\Bin\\;C:\\Program Files\\IVI Foundation\\VISA\\Win64\\Bin\\;C:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\Bin;C:\\Users\\asus\\AppData\\Local\\Microsoft\\WindowsApps;', 'PYTHONUNBUFFERED': '1', 'HOMEDRIVE': 'C:', 'PROCESSOR_REVISION': '3a09', 'SAPERADIR': 'C:\\Program Files\\Teledyne DALSA\\Sapera', 'ANT_HOME': 'E:\\apache-ant-1.9.4', 'PROCESSOR_IDENTIFIER': 'Intel64 Family 6 Model 58 Stepping 9, GenuineIntel', 'CAMERA_SDK_CUSTOM_PATH': 'C:\\Users\\asus\\AppData\\Roaming\\SMARTEK Vision\\custom', 'COMMONPROGRAMW6432': 'C:\\Program Files\\Common Files', 'GENICAM_LOG_CONFIG_JAI_V2_4': 'C:\\Program Files\\JAI\\SDK\\GenICam\\log\\config\\DefaultLogging.properties', 'PATHEXT': '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW', 'TEMP': 'C:\\Users\\asus\\AppData\\Local\\Temp', 'GENICAM_ROOT_JAI_V2_4': 'C:\\Program Files\\JAI\\SDK\\GenICam', 'PROCESSOR_ARCHITECTURE': 'AMD64'})
+os.error is <class 'OSError'>
+os.extsep is .
+os.F_OK(int) is 0
+os.R_OK is 4
+os.W_OK is 2
+os.X_OK is 1
+os.O_APPEND is 8
+os.O_BINARY is 32768
+os.O_CREAT is 256
+os.O_EXCL is 1024
+os.O_NOINHERIT is 128
+os.O_RANDOM is 16
+os.O_RDONLY is 0
+os.O_RDWR is 2
+os.O_SEQUENTIAL is 32
+os.O_SHORT_LIVED is 4096
+os.O_TEMPORARY is 64
+os.O_TEXT is 16384
+os.O_TRUNC is 512
+os.O_WRONLY is 1
+os.P_OVERLAY is 2
+os.P_NOWAIT is 1
+os.P_NOWAITO is 3
+os.P_OVERLAY is 2
+os.P_WAIT is 0
+os.TMP_MAX is 2147483647
+os.P_DETACH is 4
+os.SEEK_CUR is 1
+os.SEEK_SET is 0
+os.SEEK_END is 2
+os.linesep('/n/t') is
+
+os.name is nt
+os.pardir is ..
+os.pathsep is ;
