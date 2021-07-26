@@ -1087,6 +1087,10 @@ candidates 中的数字可以无限制重复被选取。如果至少一个所�
             area(height, min_h)
         area(height, 0)
         return trap_area
+    
+    def restore_arry(self):
+        """
+        """
             
     
 # head = tail = ListNode(None)
