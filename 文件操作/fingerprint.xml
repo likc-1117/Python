@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<fingerprint xmlns:xsi="http://schemas.chuangen.name/mobot/2010" xsi:noNamespaceSchemaLocation="fingerprint.xsd">
+		<Title name="指纹解锁结果">
+			<starttime>0</starttime>
+			<finishtime>0</finishtime>
+			<testversion>0.0.0.0</testversion>
+			<project>null</project>
+			<total>0</total>
+			<fail>0</fail>
+			<failpercent>0</failpercent>
+		</Title>
+	</fingerprint>

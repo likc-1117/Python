@@ -1,0 +1,11 @@
+	<tasks>
+		<task>
+			<taskName>rr</taskName>
+			<remark>test</remark>
+			<MSFilePaht>C:\Users\likecan\Desktop\3.ms</MSFilePaht>
+			<scriptItems>
+				<scriptItem ExecuteTime="0" LoopNum="1" ScriptName="未命名脚本" SpacingInterval="1" SpacingIntervalDateType="秒" TaskType="1" dateType=""/>
+				<scriptItem ExecuteTime="0" LoopNum="1" ScriptName="未命名脚本 副本" SpacingInterval="1" SpacingIntervalDateType="秒" TaskType="1" dateType=""/>
+			</scriptItems>
+		</task>
+	</tasks>

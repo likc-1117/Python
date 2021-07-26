@@ -1,0 +1,54 @@
+备注：在使用之前，请先设置py文件最上部分的参数：
+taskname='rrrr'      任务名称
+taskdbaddr='D:\\Mobot Files\\tasks\\task.db'    task.db的路径
+msaddr='C:\\Users\\likecan\\Desktop\\1.ms'      ms文件的路径
+taskxmladdr='D:\\Python相关\\文件操作\\task.xml'  task.xml的路径
+
+1、从ms文件中查找ms文件包含的所有脚本
+selectscript（）
+返回值：返回脚本列表
+
+
+
+2、从执行器日志数据库("task.db")中查找所有任务或者指定任务的执行结果
+opentaskdb（string）
+参数：在调用此方法时，可以不填写此参数，这样表示查询指定任务的执行结果，或者输入‘all’表示查找所有任务的执行结果
+返回值：返回和打印结果列表
+
+
+3、查找任务，如果发现数据库中有相同名称的任务，则删除原有的任务
+checktask()
+
+
+
+4、每间隔一分钟检查执行界面的进程是否存在，如果不存在则返回数字0，表示任务执行结束
+checkprocessexist()
+返回值：0
+
+
+
+
+5、在执行器中创建task.xml
+taskxml（*scriptlist）
+参数：在任务中需要加载的ms文件中的脚本的名称，调用此方法时，可以直接填写'all'，表示加载ms文件中的所有脚本
+
+6、创建任务
+createtask()
+
+
+
+7、执行任务
+runtask（int,int）
+参数：第一个参数：表示前后两条脚本执行的间隔时间
+      第二个参数：表示脚本循环次数
+
+
+8、从执行器日志数据库（“task.db”）中查找所有任务或者指定任务的执行结果，并写入到执行名称的excel中
+outputresultexcel（string）
+参数：保存结果的excel文件路径（格式为.xls），在调用此方法时，可以不填写第二个参数，这样表示excel文档名字为‘result.xls’
+
+
+
+9、从执行器日志数据库（“task.db”）中查找所有任务或者指定任务的执行结果，并写入到执行名称的TXT中
+outputresultexcel（string）
+参数：保存结果的TXT文件路径（格式为.txt），在调用此方法时，可以不填写第二个参数，这样表示TXT文档名字为'result.txt'
