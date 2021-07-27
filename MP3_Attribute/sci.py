@@ -132,7 +132,7 @@ def detect_silence(sampling_rate, wavsignal,threshold=200):
         i = 0
         n = len(channel)
         while i < n:
-            if channel[i][1] - channel[i][0] < 0.4:
+            if channel[i][1] - channel[i][0] < 1:
                 channel.pop(i)
                 n -= 1
             else:
@@ -359,7 +359,7 @@ parser.add_argument('--time', type=int, default=30,help='录音时间,单位s')
 
 args = parser.parse_args()
 if __name__ == '__main__':
-    file = 'output-2021-07-15-16-11-45.wav'
+    file = 'output-2021-07-17-10-35-27.wav'
     time = args.time
     print(time)
     # record_audio(file,time)
