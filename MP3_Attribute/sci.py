@@ -359,7 +359,7 @@ parser.add_argument('--time', type=int, default=30,help='录音时间,单位s')
 
 args = parser.parse_args()
 if __name__ == '__main__':
-    file = 'output-2021-07-17-10-35-27.wav'
+    file = 'output-2021-07-15-16-05-47.wav'
     time = args.time
     print(time)
     # record_audio(file,time)

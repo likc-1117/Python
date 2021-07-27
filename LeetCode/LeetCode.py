@@ -1,9 +1,16 @@
 # coding=utf-8
 
 class ListNode:
-    def __init__(self, val=0, next=None):
+    def __init__(self, val=0, next_node=None):
         self.val = val
-        self.next = next
+        self.next = next_node
+        
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        
 
 
 class solution:
@@ -1023,17 +1030,18 @@ candidates 中的每个数字在每个组合中只能使用一次。
         result = []
         candidates.sort()
         n = len(candidates) - 1
-        right_index = n - 1
-        left_index = 0
-        sum_ca = 0
-        while left_index <= right_index:
-            if candidates[left_index] + candidates[right_index] > target:
-                right_index -= 1
-            elif candidates[left_index] + candidates[right_index] == target:
-                temp = [candidates[left_index], candidates[right_index]].sort()
-                if temp not in result:
-                    result.append(temp)
-            else:
+        print(n)
+        def combination_s(candidates, target, combine):
+            if target < 0:
+                return
+            if target == 0:
+                combine.sort()
+                if combine not in result:
+                    result.append(combine)
+            for i,c in enumerate(candidates):
+                combination_s(candidates[i + 1:], target - c, combine + [c])
+        combination_s(candidates, target, [])
+        return result
 
             
         
@@ -1241,4 +1249,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.combination_sum2(candidates = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], target = 20))
+print(solute.combination_sum2([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],27))
