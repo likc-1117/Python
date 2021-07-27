@@ -1021,6 +1021,21 @@ candidates 中的每个数字在每个组合中只能使用一次。
 注意：解集不能包含重复的组合。 
         """
         result = []
+        candidates.sort()
+        n = len(candidates) - 1
+        right_index = n - 1
+        left_index = 0
+        sum_ca = 0
+        while left_index <= right_index:
+            if candidates[left_index] + candidates[right_index] > target:
+                right_index -= 1
+            elif candidates[left_index] + candidates[right_index] == target:
+                temp = [candidates[left_index], candidates[right_index]].sort()
+                if temp not in result:
+                    result.append(temp)
+            else:
+
+            
         
         
     def first_missing_positive(self, nums: list)->int:
@@ -1226,4 +1241,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.combination_sum2(candidates = [10,1,2,7,6,5], target = 8))
+print(solute.combination_sum2(candidates = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], target = 20))
