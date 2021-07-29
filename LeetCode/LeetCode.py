@@ -1029,20 +1029,33 @@ candidates 中的每个数字在每个组合中只能使用一次。
         """
         result = []
         candidates.sort()
-        n = len(candidates) - 1
-        print(n)
+        n = len(candidates)
         def combination_s(candidates, target, combine):
-            if target < 0:
-                return
+            if target< 0:
+                return 
             if target == 0:
                 combine.sort()
                 if combine not in result:
                     result.append(combine)
             for i,c in enumerate(candidates):
-                combination_s(candidates[i + 1:], target - c, combine + [c])
+                combination_s(candidates[i+1:], target - c, combine + [c])
+        if candidates[n - 1] == 1:
+            if n == target:
+                return [candidates]
+            elif n < target:
+                return []
+            else:
+                return [[1] * target]
+        while n > 0:
+            if candidates[n - 1] > target:
+                n -= 1
+            else:
+                break
+        candidates = candidates[:n]
         combination_s(candidates, target, [])
         return result
-
+        
+        
             
         
         
@@ -1239,9 +1252,31 @@ candidates 中的每个数字在每个组合中只能使用一次。
 '*' 可以匹配任意字符串（包括空字符串）。
 两个字符串完全匹配才算匹配成功。
         """
+        len_s = len(s)
+        len_p = len(p)
+        if not s and not p:
+            return True
+        if (p == '*' * len_p and len_p > 0) or p == '?' * len_s:
+            return True
+        s_index = p_index = p_temp_index = 0
+        while p_index < len_p:
+            if s_index > len_s - 1:
+                break
+            if p[p_index] == s[s_index] or p[p_index] == '?':
+                p_index += 1
+                s_index += 1
+            elif p[p_index] == '*':
+                p_temp_index = p_index
+                p_index += 1
+            elif p[p_temp_index] == '*':
+                s_index += 1
+            else:
+                return False
+        if p_index < len_p or s_index < len_s:
+            return False
+        return True
         
-
-            
+        
     
 # head = tail = ListNode(None)
 # for i in range(1,7):
@@ -1249,4 +1284,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.combination_sum2([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],27))
+print(solute.is_match(s = 'aa', p = 'a'))
