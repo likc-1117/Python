@@ -1022,19 +1022,32 @@ candidates 中的每个数字在每个组合中只能使用一次。
         """
         result = []
         candidates.sort()
-        n = len(candidates) - 1
-        right_index = n - 1
-        left_index = 0
-        sum_ca = 0
-        while left_index <= right_index:
-            if candidates[left_index] + candidates[right_index] > target:
-                right_index -= 1
-            elif candidates[left_index] + candidates[right_index] == target:
-                temp = [candidates[left_index], candidates[right_index]].sort()
-                if temp not in result:
-                    result.append(temp)
+        n = len(candidates)
+        def combination_s(candidates, target, combine):
+            if target< 0:
+                return 
+            if target == 0:
+                combine.sort()
+                if combine not in result:
+                    result.append(combine)
+            for i,c in enumerate(candidates):
+                combination_s(candidates[i+1:], target - c, combine + [c])
+        if candidates[n - 1] == 1:
+            if n == target:
+                return [candidates]
+            elif n < target:
+                return []
             else:
-                return
+                return [[1] * target]
+        while n > 0:
+            if candidates[n - 1] > target:
+                n -= 1
+            else:
+                break
+        candidates = candidates[:n]
+        combination_s(candidates, target, [])
+        return result
+
             
         
         
