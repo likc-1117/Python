@@ -1,16 +1,9 @@
 # coding=utf-8
 
 class ListNode:
-    def __init__(self, val=0, next_node=None):
+    def __init__(self, val=0, next=None):
         self.val = val
-        self.next = next_node
-        
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-        
+        self.next = next
 
 
 class solution:
@@ -1029,33 +1022,19 @@ candidates 中的每个数字在每个组合中只能使用一次。
         """
         result = []
         candidates.sort()
-        n = len(candidates)
-        def combination_s(candidates, target, combine):
-            if target< 0:
-                return 
-            if target == 0:
-                combine.sort()
-                if combine not in result:
-                    result.append(combine)
-            for i,c in enumerate(candidates):
-                combination_s(candidates[i+1:], target - c, combine + [c])
-        if candidates[n - 1] == 1:
-            if n == target:
-                return [candidates]
-            elif n < target:
-                return []
+        n = len(candidates) - 1
+        right_index = n - 1
+        left_index = 0
+        sum_ca = 0
+        while left_index <= right_index:
+            if candidates[left_index] + candidates[right_index] > target:
+                right_index -= 1
+            elif candidates[left_index] + candidates[right_index] == target:
+                temp = [candidates[left_index], candidates[right_index]].sort()
+                if temp not in result:
+                    result.append(temp)
             else:
-                return [[1] * target]
-        while n > 0:
-            if candidates[n - 1] > target:
-                n -= 1
-            else:
-                break
-        candidates = candidates[:n]
-        combination_s(candidates, target, [])
-        return result
-        
-        
+                return
             
         
         
@@ -1252,30 +1231,34 @@ candidates 中的每个数字在每个组合中只能使用一次。
 '*' 可以匹配任意字符串（包括空字符串）。
 两个字符串完全匹配才算匹配成功。
         """
-        len_s = len(s)
-        len_p = len(p)
-        if not s and not p:
-            return True
-        if (p == '*' * len_p and len_p > 0) or p == '?' * len_s:
-            return True
-        s_index = p_index = p_temp_index = 0
-        while p_index < len_p:
-            if s_index > len_s - 1:
-                break
-            if p[p_index] == s[s_index] or p[p_index] == '?':
-                p_index += 1
-                s_index += 1
-            elif p[p_index] == '*':
-                p_temp_index = p_index
-                p_index += 1
-            elif p[p_temp_index] == '*':
-                s_index += 1
-            else:
-                return False
-        if p_index < len_p or s_index < len_s:
-            return False
-        return True
         
+    def path_in_zigzag_tree(self, lable:int)->list:
+        """
+        在一棵无限的二叉树上，每个节点都有两个子节点，树中的节点 逐行 依次按 “之” 字形进行标记。
+如下图所示，在奇数行（即，第一行、第三行、第五行……）中，按从左到右的顺序进行标记；
+而偶数行（即，第二行、第四行、第六行……）中，按从右到左的顺序进行标记。
+给你树上某一个节点的标号 label，请你返回从根节点到该标号为 label 节点的路径，该路径是由途经的节点标号所组成的。
+        """
+        import math
+        n = int(math.log2(lable))
+        if n < 0 or lable <=0:
+            return
+        max_num = 2 ** (n + 1) - 1
+        min_num = 2 ** n
+        local_lable = -1
+        ans = [lable]
+        temp = [x for x in range(min_num, max_num)]
+        temp_num = -1
+        if (n +1) % 2 == 0:
+            local_lable = int((max_num - lable + 1) / 2)
+            temp_num = temp[local_lable]
+        else: 
+            local_lable = int((lable - min_num + 1) / 2)
+            temp_num = temp[::-1][-local_lable]
+        ans.append(temp_num)
+        self.path_in_zigzag_tree(temp_num)
+        return ans
+
         
     
 # head = tail = ListNode(None)
@@ -1284,4 +1267,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.is_match(s = 'aa', p = 'a'))
+print(solute.path_in_zigzag_tree(candidates = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], target = 20))
