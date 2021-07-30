@@ -1295,6 +1295,8 @@ candidates 中的每个数字在每个组合中只能使用一次。
             ct = ord(column_title[i].upper()) - ord('A') + 1
             ans += (26 ** i) * ct
         return ans
+    
+    
 
 # head = tail = ListNode(None)
 # for i in range(1,7):
