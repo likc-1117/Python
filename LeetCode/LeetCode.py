@@ -1245,39 +1245,61 @@ candidates 中的每个数字在每个组合中只能使用一次。
 两个字符串完全匹配才算匹配成功。
         """
         
-    def path_in_zigzag_tree(self, lable:int)->list:
+    def path_in_zigzag_tree(self, label:int)->list:
         """
-        在一棵无限的二叉树上，每个节点都有两个子节点，树中的节点 逐行 依次按 “之” 字形进行标记。
+        1104:在一棵无限的二叉树上，每个节点都有两个子节点，树中的节点 逐行 依次按 “之” 字形进行标记。
 如下图所示，在奇数行（即，第一行、第三行、第五行……）中，按从左到右的顺序进行标记；
 而偶数行（即，第二行、第四行、第六行……）中，按从右到左的顺序进行标记。
 给你树上某一个节点的标号 label，请你返回从根节点到该标号为 label 节点的路径，该路径是由途经的节点标号所组成的。
         """
-        import math
-        n = int(math.log2(lable))
-        if n < 0 or lable <=0:
-            return
-        max_num = 2 ** (n + 1) - 1
-        min_num = 2 ** n
-        local_lable = -1
-        ans = [lable]
-        temp = [x for x in range(min_num, max_num)]
-        temp_num = -1
-        if (n +1) % 2 == 0:
-            local_lable = int((max_num - lable + 1) / 2)
-            temp_num = temp[local_lable]
-        else: 
-            local_lable = int((lable - min_num + 1) / 2)
-            temp_num = temp[::-1][-local_lable]
-        ans.append(temp_num)
-        self.path_in_zigzag_tree(temp_num)
+        ans = [label] 
+        def path_tree(temp_num):
+            nonlocal ans
+            import math
+            n = int(math.log2(temp_num))
+            if n <= 0 or temp_num <= 0:
+                return ans
+            max_num = 2 ** (n + 1) - 1#当前行的最大值
+            min_num = 2 ** n#当前行的最小值
+            per_max_num = 2 ** n  - 1#前一行的最大值
+            per_min_num = 2 ** (n - 1)#前一行的最小值
+            local_lable = -1
+            num = -1
+            if (n +1) % 2 == 0:#当前行是否是偶数行
+                local_lable = math.ceil((max_num - temp_num + 1) / 2) - 1#temp_num位于前一行哪个节点下
+                temp = [x for x in range(per_min_num, per_max_num + 1)]#前一行的数值列表
+            else: 
+                local_lable = math.ceil((temp_num - min_num + 1) / 2) - 1
+                temp = [x for x in range(per_min_num, per_max_num + 1)][::-1]
+            if local_lable < 0:
+                local_lable = 0
+            num = temp[local_lable]
+            ans.append(num)
+            path_tree(num)
+        path_tree(label)
+        return ans[::-1]
+
+    def title_to_number(self, column_title: str)->int:
+        """
+        171:给你一个字符串 columnTitle ，表示 Excel 表格中的列名称。返回该列名称对应的列序号。
+例如，A -> 1  B -> 2  C -> 3  ...  Z -> 26  AA -> 27  AB -> 28  ...
+        """
+        
+        #方法一：26进制转成10进制
+        n = len(column_title)
+        if n < 1:
+            return 0
+        ans = 0
+        column_title = column_title[::-1]
+        for i in range(len(column_title)):
+            ct = ord(column_title[i].upper()) - ord('A') + 1
+            ans += (26 ** i) * ct
         return ans
 
-        
-    
 # head = tail = ListNode(None)
 # for i in range(1,7):
 #     tail.next = ListNode(i)
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.path_in_zigzag_tree(candidates = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], target = 20))
+print(solute.title_to_number('Ab'))
