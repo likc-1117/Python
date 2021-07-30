@@ -185,6 +185,10 @@ def detect_pause_2(sampling_rate, wavsignal, rate=0.035):
     # 转为时间并合并间隙
     
     result = merge_gap(res,15000)
+    if result and result[0] and result[0][0][0] < 0.1:
+        result[0].pop(0)
+    if len(result) == 2 and result[1] and result[1][0][0] < 0.1:
+        result[1].pop(0)
     for channel in result:
         i = 0
         n = len(channel)
@@ -291,7 +295,7 @@ def detect_noise2(sampling_rate,wavsignal):
         while j < len(cha_1):
             clip = cha_1[j-inter:j,:]
             clip_var = np.var(clip[:,1])
-            if clip_var > 52000:
+            if clip_var > 600000000:
                 sub_channel.append([clip[0][0],clip[-1][0]])
             j += inter
         result.append(sub_channel)
@@ -359,13 +363,14 @@ parser.add_argument('--time', type=int, default=30,help='录音时间,单位s')
 
 args = parser.parse_args()
 if __name__ == '__main__':
-    file = 'output-2021-07-15-16-11-45.wav'
+    file = 'output-2021-07-26-20-43-32.wav'
     time = args.time
     print(time)
     # record_audio(file,time)
     sampling_rate, wavsignal = load_wav(file=file)
     # wavdata = wavsignal / (2**16-1)
     wavdata = np.array(wavsignal,dtype='int32')
+    wavdata = wavdata * 100
     if len(wavdata.shape) < 2:
         wavdata = wavdata[:,np.newaxis]
     
@@ -377,7 +382,7 @@ if __name__ == '__main__':
     print(res_silent_1)
 
     print('静音检测---------------------------------')
-    res_silent = detect_silence(sampling_rate,wavdata,threshold=15)
+    res_silent = detect_silence(sampling_rate,wavdata,threshold=50)
     for i in range(len(res_silent)):
         print('{0}通道：{1}'.format(i,res_silent[i]))
         print('总段数:{0}'.format(len(res_silent[i])))
