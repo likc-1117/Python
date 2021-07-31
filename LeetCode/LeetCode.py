@@ -1,5 +1,8 @@
 # coding=utf-8
 
+from numpy import mat
+
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -1080,7 +1083,7 @@ candidates 中的每个数字在每个组合中只能使用一次。
         给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
         """
         
-        """#方法二
+        #方法二
         if not height:
             return 0
         n = len(height)
@@ -1091,7 +1094,7 @@ candidates 中的每个数字在每个组合中只能使用一次。
         for i in range(n - 2, -1, -1):#获取有边界，i点右边的最大值
             rightMax[i] = max(rightMax[i + 1], height[i])
         ans = sum(min(leftMax[i], rightMax[i]) - height[i] for i in range(n))
-        return ans"""
+        return ans
         """#方法一
         trap_area = 0
         def get_aera(h:list, weight: int, min_h: int, a:int):
@@ -1296,7 +1299,112 @@ candidates 中的每个数字在每个组合中只能使用一次。
             ans += (26 ** i) * ct
         return ans
     
+    def longest_valid_parentheses(self, s: str)->int:
+        """
+        32:给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。(代码抄袭题解)
+        """
+        s_long = 0
+        n = len(s)
+        first_index = 0
+        temp = [-1]
+        for i in range(n):
+            if s[i] == '(':
+                temp.append(i)
+            else:
+                temp.pop()
+                if not temp:
+                    temp.append(i)
+                else:
+                    s_long = max(s_long, i-temp[-1])
+        return s_long
+
+    def jump(self, nums: list)->int:
+        """
+        给你一个非负整数数组 nums ，你最初位于数组的第一个位置。
+数组中的每个元素代表你在该位置可以跳跃的最大长度。
+你的目标是使用最少的跳跃次数到达数组的最后一个位置。
+假设你总是可以到达数组的最后一个位置。
+        """
+        step_count = 0
+        def jump_temp(temp:list):
+            end_num = temp[-1]
+            n = len(temp)
+            nonlocal step_count
+            if n <= 1:
+                return
+            for i in range(n - 1):
+                if temp[i] >= n - i - 1:#如果当前元素的值，大于此元素到最后一个元素的距离，即找到第一个可以跳到最后一个元素的元素索引
+                    temp = temp[:i+1]
+                    step_count += 1
+                    break
+            jump_temp(temp)
+        jump_temp(nums)
+        return step_count
+
+    def permute(self, nums: list)->list:
+        """
+        给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+        """
+        ans = []
+        n = len(nums)
+        first_num = 0
+        if n < 2:
+            ans.append(nums)
+        elif n == 2:
+            ans.append([nums[0], nums[1]])
+            ans.append([nums[1], nums[0]])
+        else:
+            for i in range(n):
+                first_num = nums[i]#确定接下来的排列的首个数字
+                temp = nums[:i] + nums[i+1:]#将剩下的内容变成一个列表
+                for temp_num in self.permute(temp):#递归，知道传入的列表只剩下两个元素
+                    ans.append([first_num] + temp_num)
+        return ans
+
+
+    def permute_unique(self, nums: list) -> list:
+        """
+        给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+        """
+        ans = []
+        n = len(nums)
+        first_num = 0
+        if n < 2:
+            ans.append(nums)
+        elif n == 2:
+            if nums[0] == nums[1]:
+                ans.append(nums)
+            else:
+                ans.append([nums[0], nums[1]])
+                ans.append([nums[1], nums[0]])
+        else:
+            for i in range(n):
+                first_num = nums[i]#确定接下来的排列的首个数字
+                temp = nums[:i] + nums[i+1:]#将剩下的内容变成一个列表
+                for temp_num in self.permute_unique(temp):#递归，知道传入的列表只剩下两个元素
+                    temp_list = [first_num] + temp_num
+                    if temp_list not in ans:
+                        ans.append(temp_list)
+        return ans
     
+    def rotate(self, matrix: list) -> None:
+        """
+        给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
+你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
+        """
+        import numpy as np
+        matrix = np.array(matrix)
+        matrix = list(map(list,np.fliplr(matrix.T)))
+        return matrix
+
+    def group_anagrams(self, strs: list)->list:
+        """
+        给定一个字符串数组，将字母异位词组合在一起。可以按任意顺序返回结果列表。
+字母异位词指字母相同，但排列不同的字符串。
+        """
+        s = list(map(sorted,list(map(list,strs))))
+        for i,c in enumerate(s):
+        return s
 
 # head = tail = ListNode(None)
 # for i in range(1,7):
@@ -1304,4 +1412,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.title_to_number('Ab'))
+print(solute.group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
