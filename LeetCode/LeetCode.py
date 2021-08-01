@@ -1402,9 +1402,28 @@ candidates 中的每个数字在每个组合中只能使用一次。
         给定一个字符串数组，将字母异位词组合在一起。可以按任意顺序返回结果列表。
 字母异位词指字母相同，但排列不同的字符串。
         """
-        s = list(map(sorted,list(map(list,strs))))
-        for i,c in enumerate(s):
-        return s
+        ans = []
+        s = list(map(sorted, strs))
+        n = len(s)
+        temp = []
+        temp_list = []
+        first_index = 0
+        end_index = n - 1
+        while first_index < n:
+            if s[first_index] in temp:
+                first_index += 1
+                continue
+            if s[first_index] == s[end_index] and first_index != end_index:
+                temp_list.append(strs[end_index])
+            end_index -= 1
+            if first_index >= end_index:
+                temp.append(s[first_index])
+                temp_list.append(strs[first_index])
+                first_index += 1
+                end_index = n - 1
+                ans.append(temp_list)
+                temp_list = []
+        return ans
 
 # head = tail = ListNode(None)
 # for i in range(1,7):
@@ -1412,4 +1431,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+print(solute.group_anagrams(['a']))
