@@ -1242,7 +1242,7 @@ candidates 中的每个数字在每个组合中只能使用一次。
 
     def is_match(self,s:str, p:str)->bool:
         """
-        给定一个字符串 (s) 和一个字符模式 (p) ，实现一个支持 '?' 和 '*' 的通配符匹配。
+        44:给定一个字符串 (s) 和一个字符模式 (p) ，实现一个支持 '?' 和 '*' 的通配符匹配。
 '?' 可以匹配任何单个字符。
 '*' 可以匹配任意字符串（包括空字符串）。
 两个字符串完全匹配才算匹配成功。
@@ -1320,7 +1320,7 @@ candidates 中的每个数字在每个组合中只能使用一次。
 
     def jump(self, nums: list)->int:
         """
-        给你一个非负整数数组 nums ，你最初位于数组的第一个位置。
+        45:给你一个非负整数数组 nums ，你最初位于数组的第一个位置。
 数组中的每个元素代表你在该位置可以跳跃的最大长度。
 你的目标是使用最少的跳跃次数到达数组的最后一个位置。
 假设你总是可以到达数组的最后一个位置。
@@ -1343,7 +1343,7 @@ candidates 中的每个数字在每个组合中只能使用一次。
 
     def permute(self, nums: list)->list:
         """
-        给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+        46:给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
         """
         ans = []
         n = len(nums)
@@ -1364,7 +1364,7 @@ candidates 中的每个数字在每个组合中只能使用一次。
 
     def permute_unique(self, nums: list) -> list:
         """
-        给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+        47:给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
         """
         ans = []
         n = len(nums)
@@ -1389,7 +1389,7 @@ candidates 中的每个数字在每个组合中只能使用一次。
     
     def rotate(self, matrix: list) -> None:
         """
-        给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
+        48:给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
 你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
         """
         import numpy as np
@@ -1399,31 +1399,27 @@ candidates 中的每个数字在每个组合中只能使用一次。
 
     def group_anagrams(self, strs: list)->list:
         """
-        给定一个字符串数组，将字母异位词组合在一起。可以按任意顺序返回结果列表。
+        49:给定一个字符串数组，将字母异位词组合在一起。可以按任意顺序返回结果列表。
 字母异位词指字母相同，但排列不同的字符串。
         """
-        ans = []
-        s = list(map(sorted, strs))
-        n = len(s)
-        temp = []
-        temp_list = []
-        first_index = 0
-        end_index = n - 1
-        while first_index < n:
-            if s[first_index] in temp:
-                first_index += 1
-                continue
-            if s[first_index] == s[end_index] and first_index != end_index:
-                temp_list.append(strs[end_index])
-            end_index -= 1
-            if first_index >= end_index:
-                temp.append(s[first_index])
-                temp_list.append(strs[first_index])
-                first_index += 1
-                end_index = n - 1
-                ans.append(temp_list)
-                temp_list = []
-        return ans
+        """
+        from collections import defaultdict
+        mp = defaultdict(list)#创建一个默认的dict，并将dict的values的类型默认为list
+        for st in strs:
+            key = "".join(sorted(st))
+            mp[key].append(st)
+        
+        return list(mp.values())"""
+        ans = {}
+        for s in strs:
+            ans.setdefault(''.join(sorted(s)),[]).append(s)#此处setdefault的用法与上述的defalultdict的用法一致
+        return list(ans.values())
+    
+    def my_pow(self, x: float, n: int)->float:
+        """
+        50:实现 pow(x, n) ，即计算 x 的 n 次幂函数（即，xn）
+        """
+        return x ** n
 
 # head = tail = ListNode(None)
 # for i in range(1,7):
@@ -1431,4 +1427,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.group_anagrams(['a']))
+print(solute.my_pow(2.10000,2))
