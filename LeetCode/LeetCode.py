@@ -1420,11 +1420,47 @@ candidates 中的每个数字在每个组合中只能使用一次。
         50:实现 pow(x, n) ，即计算 x 的 n 次幂函数（即，xn）
         """
         return x ** n
-
+    
+    def slove_n_queens(self, n: int)->list:
+        """
+        n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
+给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
+每一种解法包含一个不同的 n 皇后问题 的棋子放置方案，该方案中 'Q' 和 '.' 分别代表了皇后和空位。
+    皇后可走横、竖、斜三个方向，切每个方向走的步数不限
+        """
+        result = []
+        temp_col = 0
+        def n_queen(colum):
+            nonlocal temp_col
+            ans = [['.' for _ in range(n)] for _ in range(n)]
+            ans[0][colum] = 'Q'
+            cannot = {'col':[colum],'row':[0],'slash':[(i, colum+i) for i in range(n - colum)]+[(i, colum-i) for i in range(n) if colum >= i]}
+            for row in range(1,n):
+                for col in range(n):
+                    if col in cannot['col'] or (row, col) in cannot['slash']:
+                        continue
+                    ans[row][temp_col] = 'Q'
+                    if row == 1:
+                        temp_col = col +1
+                    cannot['col'].append(col)
+                    cannot['slash']+=[(row+i, col+i) for i in range(n - col)]+[(row+i, col-i) for i in range(n) if col >= i]
+                    break
+            return ans
+        colum = 0
+        while colum < n:
+            ans = n_queen(colum)
+            temp = list(map(''.join,ans))
+            if ['.' * n] not in temp:
+                result.append(temp)
+            if temp_col >= n:
+                colum += 1
+        return result
+    
+    
 # head = tail = ListNode(None)
 # for i in range(1,7):
 #     tail.next = ListNode(i)
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.my_pow(2.10000,2))
+print(solute.slove_n_queens(5))
