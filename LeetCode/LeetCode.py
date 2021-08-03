@@ -1429,19 +1429,19 @@ candidates 中的每个数字在每个组合中只能使用一次。
     皇后可走横、竖、斜三个方向，切每个方向走的步数不限
         """
         result = []
-        temp_col = 0
+        has_use = []
         def n_queen(colum):
-            nonlocal temp_col
+            nonlocal has_use
             ans = [['.' for _ in range(n)] for _ in range(n)]
             ans[0][colum] = 'Q'
             cannot = {'col':[colum],'row':[0],'slash':[(i, colum+i) for i in range(n - colum)]+[(i, colum-i) for i in range(n) if colum >= i]}
+            
             for row in range(1,n):
                 for col in range(n):
-                    if col in cannot['col'] or (row, col) in cannot['slash']:
+                    if col in cannot['col'] or (row, col) in cannot['slash'] or (row,col) in has_use:
                         continue
-                    ans[row][temp_col] = 'Q'
-                    if row == 1:
-                        temp_col = col +1
+                    ans[row][col] = 'Q'
+                    has_use.append((row,col))
                     cannot['col'].append(col)
                     cannot['slash']+=[(row+i, col+i) for i in range(n - col)]+[(row+i, col-i) for i in range(n) if col >= i]
                     break
@@ -1450,10 +1450,9 @@ candidates 中的每个数字在每个组合中只能使用一次。
         while colum < n:
             ans = n_queen(colum)
             temp = list(map(''.join,ans))
-            if ['.' * n] not in temp:
+            if '.' * n not in temp:
                 result.append(temp)
-            if temp_col >= n:
-                colum += 1
+            colum += 1
         return result
     
     
