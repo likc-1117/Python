@@ -1421,40 +1421,71 @@ candidates 中的每个数字在每个组合中只能使用一次。
         """
         return x ** n
     
+    def triangle_number(self, nums:list)->int:
+        """
+        611:给定一个包含非负整数的数组，你的任务是统计其中可以组成三角形三条边的三元组个数。
+        """
+                
+        n = len(nums)
+        nums.sort()
+        ans = 0
+        for a_index in range(n):
+            for b_index in range(a_index + 1, n):
+                left, right, k = b_index + 1, n - 1, b_index
+                while left <= right:
+                    mid = (left + right) // 2
+                    if nums[mid] < nums[a_index] + nums[b_index]:
+                        k = mid
+                        left = mid + 1
+                    else:
+                        right = mid - 1
+                ans += k - b_index
+        return ans
+    
     def slove_n_queens(self, n: int)->list:
         """
-        n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
+        51:n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
 给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
 每一种解法包含一个不同的 n 皇后问题 的棋子放置方案，该方案中 'Q' 和 '.' 分别代表了皇后和空位。
     皇后可走横、竖、斜三个方向，切每个方向走的步数不限
+    未解决
         """
         result = []
-        has_use = []
-        def n_queen(colum):
-            nonlocal has_use
-            ans = [['.' for _ in range(n)] for _ in range(n)]
-            ans[0][colum] = 'Q'
-            cannot = {'col':[colum],'row':[0],'slash':[(i, colum+i) for i in range(n - colum)]+[(i, colum-i) for i in range(n) if colum >= i]}
-            
-            for row in range(1,n):
-                for col in range(n):
-                    if col in cannot['col'] or (row, col) in cannot['slash'] or (row,col) in has_use:
-                        continue
+        ans = [['.' for _ in range(n)] for _ in range(n)]
+        q_idx = 0
+        row = 0
+        col = 0
+        for col in range(n):
+            cannot = {'col':[],'row':[],'slash':[]}
+            while row < n and row >= 0:
+                while col < n and  col in cannot['col'] or (row, col) in cannot['slash']:
+                    col += 1
+                if col < n:
                     ans[row][col] = 'Q'
-                    has_use.append((row,col))
                     cannot['col'].append(col)
-                    cannot['slash']+=[(row+i, col+i) for i in range(n - col)]+[(row+i, col-i) for i in range(n) if col >= i]
-                    break
-            return ans
-        colum = 0
-        while colum < n:
-            ans = n_queen(colum)
-            temp = list(map(''.join,ans))
-            if '.' * n not in temp:
-                result.append(temp)
-            colum += 1
+                    cannot['slash'] += [(row+i, col+i) for i in range(n - col)]+[(row+i, col-i) for i in range(n) if col >= i]
+                    row += 1
+                    col = 0
+                else:
+                    row -= 1
+                    q_idx =  ans[row].index('Q')
+                    ans[row][q_idx] = '.'
+                    cannot['col'].pop()
+                    for i in range(n - q_idx):
+                        cannot['slash'].remove((row+i, q_idx+i))
+                    for i in range(n):
+                        if q_idx >= i:
+                            cannot['slash'].remove((row+i, q_idx-i))
+                    col = q_idx + 1
+            if row >= 0:
+                result.append(list(map(''.join, ans)))
         return result
     
+    def max_sub_array(self, nums: list)->int:
+        """
+        给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+        """
+        n = len(nums)
     
 # head = tail = ListNode(None)
 # for i in range(1,7):
@@ -1462,4 +1493,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.slove_n_queens(5))
+print(solute.max_sub_array(nums = [-2,1,-3,4,-1,2,1,-5,4]))
