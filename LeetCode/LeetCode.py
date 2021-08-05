@@ -1483,9 +1483,24 @@ candidates 中的每个数字在每个组合中只能使用一次。
     
     def max_sub_array(self, nums: list)->int:
         """
-        给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+        53：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
         """
         n = len(nums)
+        sum_nums = sum(nums)
+        ans = 0
+        max_num = max(nums)
+        start_idx = 0
+        next_idx = start_idx + 1
+        temp = 0
+        while start_idx < n:
+            if nums[start_idx] + ans > ans:
+                ans += nums[start_idx]
+            else:
+                ans = 0
+            start_idx  += 1
+        print(ans)
+        return max(ans, sum_nums, max_num)
+            
     
 # head = tail = ListNode(None)
 # for i in range(1,7):
@@ -1493,4 +1508,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.max_sub_array(nums = [-2,1,-3,4,-1,2,1,-5,4]))
+print(solute.max_sub_array(nums = [-5,1,-3,4,-1,2,1,-5,4]))
