@@ -1485,27 +1485,55 @@ candidates 中的每个数字在每个组合中只能使用一次。
         """
         53：给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
         """
+        """#方法一：贪心算法
         n = len(nums)
         sum_nums = sum(nums)
-        ans = 0
+        ans = - 10 ** 5 -1
         max_num = max(nums)
-        start_idx = 0
-        next_idx = start_idx + 1
-        temp = 0
-        while start_idx < n:
-            if nums[start_idx] + ans > ans:
-                ans += nums[start_idx]
-            else:
-                ans = 0
-            start_idx  += 1
-        print(ans)
-        return max(ans, sum_nums, max_num)
+        temp_per = -10 ** 5 - 1
+        temp_current = - 10 ** 5 -1
+        for i in range(n):
+            temp_per = temp_current
+            if temp_per < 0 :
+                temp_per = 0
+            temp_current = temp_per + nums[i]
+            ans = max(temp_current, ans)
+        return max(ans, sum_nums, max_num)"""
+        #动态规划法
+        n = len(nums)
+        for i in range(1, n):
+            if nums[i - 1] > 0:#表示前i- 1项的和是否大于零，如果大于零，则当前的值（第i项）的值为nums[i] + nums[i - 1]
+                nums[i] = nums[i] + nums[i - 1]
+            print(nums)
+        return max(nums)
             
-    
+    def spira_order(self, matrix: list)->list:
+        """
+        54:给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
+        """
+        m = len(matrix)
+        n = len(matrix[0])
+        ans = []
+        is_use = [[False for _ in range(n)] for _ in range(m) ]
+        for i in range(m+1):
+            for j in range(n):
+                if not is_use[i][j] and j < n:
+                    ans.append(matrix[i][j])
+                    is_use[i][j] = True
+                else:
+                    break
+            j -= 1
+            if not is_use[i][j] and i < m:
+                ans.append(matrix[i][j])
+                is_use[i][j] = True
+            print(ans)
+            print(is_use)
+            
+
 # head = tail = ListNode(None)
 # for i in range(1,7):
 #     tail.next = ListNode(i)
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.max_sub_array(nums = [-5,1,-3,4,-1,2,1,-5,4]))
+print(solute.spira_order([[1,2,3],[4,5,6],[7,8,9]]))
