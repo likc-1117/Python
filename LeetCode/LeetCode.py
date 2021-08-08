@@ -1515,20 +1515,18 @@ candidates 中的每个数字在每个组合中只能使用一次。
         n = len(matrix[0])
         ans = []
         is_use = [[False for _ in range(n)] for _ in range(m) ]
-        for i in range(m+1):
-            for j in range(n):
-                if not is_use[i][j] and j < n:
-                    ans.append(matrix[i][j])
-                    is_use[i][j] = True
-                else:
-                    break
-            j -= 1
-            if not is_use[i][j] and i < m:
-                ans.append(matrix[i][j])
-                is_use[i][j] = True
-            print(ans)
-            print(is_use)
-            
+        row = col = 0
+        rot_num = 0
+        import numpy as np
+        def get_item(temp_matrix, is_use, row_num):
+            temp_col = 0
+            n = len(temp_matrix[0])
+            while temp_col < n:
+                if not is_use[row_num][temp_col]:
+                    ans.append(temp_matrix[row_num][temp_col])
+                    is_use[row_num][temp_col] = True
+                temp_col += 1
+        
 
 # head = tail = ListNode(None)
 # for i in range(1,7):
