@@ -10,7 +10,7 @@ def sin_audio():
     framerate = int(44100)#声音频率
     # bytes needed every sample
     sample_width = 2
-    duration = 3600 #录制时间
+    duration = 60 #录制时间
     frequency = 200
     volume = 2000
     x = np.linspace(0, duration, num=duration*framerate)
@@ -18,7 +18,7 @@ def sin_audio():
     # 将波形数据转换成数组
     sine_wave = y
     #save wav file
-    wf = wave.open("onehour.mp3", 'wb')
+    wf = wave.open("oneminute.wav", 'wb')
     wf.setnchannels(2)
     wf.setframerate(framerate)
     wf.setsampwidth(sample_width)
