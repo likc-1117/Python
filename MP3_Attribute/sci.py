@@ -8,6 +8,8 @@ from scipy.io.wavfile import write
 # 加载音频文件
 def load_wav(file):
     sampling_rate, wavsignal = wav.read(file)
+    # print('sampling_rate:{0}'.format(sampling_rate))
+    # print('wavsignal:{0}'.format(wavsignal))
     return sampling_rate, wavsignal
 # 录音
 def record_audio(file,record_time):
@@ -67,14 +69,19 @@ def has_voice(sampling_rate, wavsignal, channel_id,threshold=200):
         print('通道数越界')
         exit()
     cha_1 = np.abs(channel_wav)
-    min_pause_time = sampling_rate//1000
+    min_pause_time = sampling_rate//100
 
     j = min_pause_time
+    has_voice_count = 0
     while j < len(cha_1):
         clip = cha_1[j-min_pause_time:j]
+        # print('clip:{0}'.format(clip))
         if clip.max() > threshold:
-            return True
+            has_voice_count += 1
+            # print('clip:{0}'.format(clip.max()))
         j += min_pause_time
+    if has_voice_count > sampling_rate/min_pause_time:
+        return True
     return False
     
 
@@ -128,7 +135,7 @@ def detect_silence(sampling_rate, wavsignal,threshold=200):
         i = 0
         n = len(channel)
         while i < n:
-            if channel[i][1] - channel[i][0] < 1:
+            if channel[i][1] - channel[i][0] < 0.4:
                 channel.pop(i)
                 n -= 1
             else:
@@ -166,7 +173,7 @@ def detect_pause_2(sampling_rate, wavsignal, rate=0.035):
         返回静音时间段
     '''
     diff = int(rate*sampling_rate)
-    min_pause_time = sampling_rate//1000
+    min_pause_time = sampling_rate//100
     slient = 10
     # 双通道
     res = []
@@ -185,6 +192,61 @@ def detect_pause_2(sampling_rate, wavsignal, rate=0.035):
     # 转为时间并合并间隙
     
     result = merge_gap(res,15000)
+    if result and result[0] and result[0][0][0] < 0.1:
+        result[0].pop(0)
+    if len(result) == 2 and result[1] and result[1][0][0] < 0.1:
+        result[1].pop(0)
+    for channel in result:
+        i = 0
+        n = len(channel)
+        while i < n:
+            if channel[i][1] - channel[i][0] > 1:
+                channel.pop(i)
+                n -= 1
+            else:
+                i += 1
+    return result
+
+# 卡顿检测
+def detect_pause_3(sampling_rate, wavsignal, rate=0.035):
+    '''
+    通过计算波峰和波谷之间的差距，差距小于某个阈值，认为是卡顿
+    Args:
+        sampling_rate: 采样率.
+        wavsignal: 声音数据.
+        channel_id: 通道id.
+        rate:  波峰与波谷差占最大值的比例 默认0.035
+    Returns:
+        返回静音时间段
+    '''
+    min_pause_time = sampling_rate//100
+    res_max = []
+    for i in range(wavsignal.shape[1]): # 通道个数
+        cha_1 = wavsignal[:,i]
+        # print(cha_1)
+        j = min_pause_time
+        channel = []
+        while j < len(cha_1):
+            clip = cha_1[j-min_pause_time:j]
+            max_value = clip.max()
+            channel.append([j-min_pause_time,max_value])
+            j += min_pause_time
+        res_max.append(channel)
+    ans = []
+    for cha_1 in res_max:
+        sub_channel = []
+        j = 0
+        while j < len(cha_1) - 1:
+            if cha_1[j+1][1] < cha_1[j][1]/2:
+                end = j+1
+                while end < len(cha_1) - 1 and cha_1[end][1] < cha_1[j][1]/2:
+                    end += 1
+                sub_channel.append([cha_1[j][0],cha_1[end][0]])
+                j = end
+            else:
+                j += 1
+        ans.append(sub_channel)
+    result = merge_gap(ans)
     if result and result[0] and result[0][0][0] < 0.1:
         result[0].pop(0)
     if len(result) == 2 and result[1] and result[1][0][0] < 0.1:
@@ -363,7 +425,7 @@ parser.add_argument('--time', type=int, default=30,help='录音时间,单位s')
 
 args = parser.parse_args()
 if __name__ == '__main__':
-    file = 'output-2021-07-26-20-43-32.wav'
+    file = 'output-2021-08-05-19-49-16.wav'
     time = args.time
     print(time)
     # record_audio(file,time)
@@ -377,24 +439,27 @@ if __name__ == '__main__':
     
     
     # 针对某一通道 进行检测
-    res_silent_1 = has_voice(sampling_rate,wavdata,0,threshold=50)
-    print('是否有声------------------------')
+    res_silent_1 = has_voice(sampling_rate,wavdata,0,threshold=200)
+    print('通道0（左耳）是否有声------------------------')
+    print(res_silent_1)
+    res_silent_1 = has_voice(sampling_rate,wavdata,1,threshold=200)
+    print('通道1（右耳）是否有声------------------------')
     print(res_silent_1)
 
     print('静音检测---------------------------------')
-    res_silent = detect_silence(sampling_rate,wavdata,threshold=50)
+    res_silent = detect_silence(sampling_rate,wavdata,threshold=200)
     for i in range(len(res_silent)):
         print('{0}通道：{1}'.format(i,res_silent[i]))
         print('总段数:{0}'.format(len(res_silent[i])))
 
     print('卡顿检测---------------------------------')
-    res_pause = detect_pause_2(sampling_rate,wavdata,rate=0.025)
+    res_pause = detect_pause_3(sampling_rate,wavdata,rate=0.05)
     for i in range(len(res_pause)):
         print('{0}通道：{1}'.format(i,res_pause[i]))
         print('总段数:{0}'.format(len(res_pause[i])))
 
     print('卡顿检测2---------------------------------')
-    res_pause_2 = detect_pause_by_normalize(sampling_rate,wavdata,rate=0.01)
+    res_pause_2 = detect_pause_by_normalize(sampling_rate,wavdata,rate=0.035)
     for i in range(len(res_pause_2)):
         print('{0}通道：{1}'.format(i,res_pause_2[i]))
         print('总段数:{0}'.format(len(res_pause_2[i])))
