@@ -1537,10 +1537,29 @@ candidates 中的每个数字在每个组合中只能使用一次。
         n_peimes = len(peimes)
         if n == 1:
             return 1
-        ans = [1]
-        for i in range(1,n + 1):
-            if i < n_peimes:
-                pass
+        max_num = 2 ** 31 - 1
+        ans = [1] + peimes
+        temp = [1] + peimes
+        temp_result = max_num + 1
+        left_idx = 0
+        while left_idx < n_peimes:
+            temp = [i * peimes[left_idx] for i in temp if i * peimes[left_idx] < temp_result]
+            if temp:
+                for p in temp:
+                    if p >= temp_result:
+                        break
+                    if p not in ans:
+                        ans.append(p)
+                if len(ans) >= n:
+                    ans.sort()
+                    temp_result = ans[n - 1]
+            else:
+                left_idx += 1
+                temp = [1] + peimes
+        return min(temp_result, max_num)
+            
+
+        
         
 # head = tail = ListNode(None)
 # for i in range(1,7):
@@ -1548,4 +1567,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.nth_super_ugly_number(12,[2,7,13,19]))
+print(solute.nth_super_ugly_number(35,[2,3,11,13,17,23,29,31,37,47]))
