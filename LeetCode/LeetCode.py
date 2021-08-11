@@ -1528,34 +1528,33 @@ candidates 中的每个数字在每个组合中只能使用一次。
                 temp_col += 1
         
         
-    def nth_super_ugly_number(self, n: int, peimes: list)->int:
+    def nth_super_ugly_number(self, n: int, primes: list)->int:
         """          
             313:超级丑数 是一个正整数，并满足其所有质因数都出现在质数数组 primes 中。
             给你一个整数 n 和一个整数数组 primes ，返回第 n 个 超级丑数 。
             题目数据保证第 n 个 超级丑数 在 32-bit 带符号整数范围内。
         """
-        n_peimes = len(peimes)
+        n_peimes = len(primes)
         if n == 1:
             return 1
         max_num = 2 ** 31 - 1
-        ans = [1] + peimes
-        temp = [1] + peimes
+        ans = [1] + primes
         temp_result = max_num + 1
         left_idx = 0
         while left_idx < n_peimes:
-            temp = [i * peimes[left_idx] for i in temp if i * peimes[left_idx] < temp_result]
-            if temp:
-                for p in temp:
-                    if p >= temp_result:
-                        break
-                    if p not in ans:
-                        ans.append(p)
-                if len(ans) >= n:
-                    ans.sort()
-                    temp_result = ans[n - 1]
-            else:
+            temp_n = len(ans)
+            ans += [i * primes[left_idx] for i in ans if i * primes[left_idx] < temp_result and i * primes[left_idx] not in ans and i * primes[left_idx] <= max_num]
+            if temp_n == len(ans):
                 left_idx += 1
-                temp = [1] + peimes
+                continue
+            print(sorted(ans))
+            if len(ans) >= n:
+                ans.sort()
+                if temp_result != ans[n - 1]:
+                    temp_result = ans[n - 1]
+                    ans = ans[:n]
+                else:
+                    left_idx += 1
         return min(temp_result, max_num)
             
 
@@ -1567,4 +1566,4 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.nth_super_ugly_number(35,[2,3,11,13,17,23,29,31,37,47]))
+print(solute.nth_super_ugly_number(500,[5,7,13,17,23,29,31,43,53,59,61,71,73,79,83,97,109,131,137,163,167,181,191,193,197,199,227,233,251,263]))
