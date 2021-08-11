@@ -1533,31 +1533,54 @@ candidates 中的每个数字在每个组合中只能使用一次。
             313:超级丑数 是一个正整数，并满足其所有质因数都出现在质数数组 primes 中。
             给你一个整数 n 和一个整数数组 primes ，返回第 n 个 超级丑数 。
             题目数据保证第 n 个 超级丑数 在 32-bit 带符号整数范围内。
+            参考欧拉筛法
         """
-        n_peimes = len(primes)
+        ans = [0] * (n + 1)
+        ans[1] = 1
+        m = len(primes)
+        pointers = [1] * m
+        for i in range(2, n + 1):
+            min_num = min(ans[pointers[j]] * primes[j] for j in range(m))
+            ans[i] = min_num
+            for j in range(m):
+                if ans[pointers[j]] * primes[j] == min_num:
+                    pointers[j] += 1
+        return ans[n]
+
+    def is_ugly(self, n: int)->bool:
+        """
+        263：给你一个整数 n ，请你判断 n 是否为 丑数 。如果是，返回 true ；否则，返回 false 。
+丑数 就是只包含质因数 2、3 和/或 5 的正整数。
+        """
+        """
+        #递归法
+        primes = [2,3,5]
+        is_divie = False
+        if n == 1:
+            is_divie = True
+        idx = 0
+        while idx < len(primes):
+            if n % primes[idx] == 0 and n > 0:
+                n = n // primes[idx] 
+                is_divie = self.is_ugly((n))
+            idx += 1
+        return is_divie"""
+        if n <= 0:
+            return False
+        primes = [2,3,5]
+        for p in primes:
+            while n % p == 0:
+                n = n // p
+        return n == 1
+
+    def nth_ungly_number(self, n: int)->int:
+        """
+        给你一个整数 n ，请你找出并返回第 n 个 丑数 。
+丑数 就是只包含质因数 2、3 和/或 5 的正整数。
+        """
         if n == 1:
             return 1
-        max_num = 2 ** 31 - 1
-        ans = [1] + primes
-        temp_result = max_num + 1
-        left_idx = 0
-        while left_idx < n_peimes:
-            temp_n = len(ans)
-            ans += [i * primes[left_idx] for i in ans if i * primes[left_idx] < temp_result and i * primes[left_idx] not in ans and i * primes[left_idx] <= max_num]
-            if temp_n == len(ans):
-                left_idx += 1
-                continue
-            print(sorted(ans))
-            if len(ans) >= n:
-                ans.sort()
-                if temp_result != ans[n - 1]:
-                    temp_result = ans[n - 1]
-                    ans = ans[:n]
-                else:
-                    left_idx += 1
-        return min(temp_result, max_num)
-            
-
+        primes = [2,3,5]
         
         
 # head = tail = ListNode(None)
@@ -1566,4 +1589,6 @@ candidates 中的每个数字在每个组合中只能使用一次。
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.nth_super_ugly_number(500,[5,7,13,17,23,29,31,43,53,59,61,71,73,79,83,97,109,131,137,163,167,181,191,193,197,199,227,233,251,263]))
+print(solute.is_ugly(16))
+
+
