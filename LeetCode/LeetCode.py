@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from numpy import mat
+from numpy import equal, mat
 
 
 class ListNode:
@@ -1575,20 +1575,88 @@ candidates 中的每个数字在每个组合中只能使用一次。
 
     def nth_ungly_number(self, n: int)->int:
         """
-        给你一个整数 n ，请你找出并返回第 n 个 丑数 。
+        264:给你一个整数 n ，请你找出并返回第 n 个 丑数 。
 丑数 就是只包含质因数 2、3 和/或 5 的正整数。
+欧拉筛法，计算小于n的素数
+filter, primers = [False for _ in range(n + 1)], []
+    for i in range(2, n + 1):
+        if not filter[i]:
+            primers.append(i)
+        for prime in primers:
+            if i * prime > n:
+                break
+            filter[i * prime] = True
+            if i % prime == 0:
+                break
+    return primers
         """
+        """
+        #以下只适合于n比较小的情况,n<=100
         if n == 1:
             return 1
+        count = 1
+        init_num = 2
+        result = 0
+        while count < n:
+            if self.is_ugly(init_num):
+                result = init_num
+                count += 1
+            init_num += 1
+        return result"""
         primes = [2,3,5]
+        ans = [0] * (n + 1)
+        ans[1] = 1
+        m = len(primes)
+        pointers = [1] * m
+        for i in range(2, n + 1):
+            min_num = min(ans[pointers[j]] * primes[j] for j in range(m))
+            ans[i] = min_num
+            for j in range(m):
+                if ans[pointers[j]] * primes[j] == min_num:
+                    pointers[j] += 1
+        return ans[n]
         
-        
+
+    def longest_palindrome_subseq(self, s: str)->int:
+        """
+        516:给你一个字符串 s ，找出其中最长的回文子序列，并返回该序列的长度。
+子序列定义为：不改变剩余字符顺序的情况下，删除某些字符或者不删除任何字符形成的一个序列。
+        """
+
+    def can_jump(self, nums: list)->bool:
+        """
+        55 跳跃游戏：给定一个非负整数数组 nums ，你最初位于数组的 第一个下标 。
+数组中的每个元素代表你在该位置可以跳跃的最大长度。
+判断你是否能够到达最后一个下标。
+        """
+        n = len(nums)
+        idx = 0
+        is_can = False
+        if nums[0] == 0:
+            is_can = False
+        if 0 not in nums:
+            return True
+        while idx < n:
+            if idx + nums[idx] >= n - 1:
+                is_can = True
+                break
+            if nums[idx + nums[idx]] == 0:
+                if False in  [num == 0 for num in nums[idx+1:idx+nums[idx] + 1]]:
+                    idx += 1
+                else:
+                    break
+            else:
+                idx = idx + nums[idx]
+        return is_can
+
+
+
 # head = tail = ListNode(None)
 # for i in range(1,7):
 #     tail.next = ListNode(i)
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.is_ugly(16))
+print(solute.can_jump([2,3,1,0,4]))
 
 
