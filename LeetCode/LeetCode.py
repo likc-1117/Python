@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from numpy import equal, mat
+from numpy import equal, is_busday, mat, right_shift
 
 
 class ListNode:
@@ -1507,25 +1507,7 @@ candidates 中的每个数字在每个组合中只能使用一次。
             print(nums)
         return max(nums)
             
-    def spira_order(self, matrix: list)->list:
-        """
-        54:给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
-        """
-        m = len(matrix)
-        n = len(matrix[0])
-        ans = []
-        is_use = [[False for _ in range(n)] for _ in range(m) ]
-        row = col = 0
-        rot_num = 0
-        import numpy as np
-        def get_item(temp_matrix, is_use, row_num):
-            temp_col = 0
-            n = len(temp_matrix[0])
-            while temp_col < n:
-                if not is_use[row_num][temp_col]:
-                    ans.append(temp_matrix[row_num][temp_col])
-                    is_use[row_num][temp_col] = True
-                temp_col += 1
+    
         
         
     def nth_super_ugly_number(self, n: int, primes: list)->int:
@@ -1617,38 +1599,6 @@ filter, primers = [False for _ in range(n + 1)], []
         return ans[n]
         
 
-    def longest_palindrome_subseq(self, s: str)->int:
-        """
-        516:给你一个字符串 s ，找出其中最长的回文子序列，并返回该序列的长度。
-子序列定义为：不改变剩余字符顺序的情况下，删除某些字符或者不删除任何字符形成的一个序列。
-        """
-
-    def can_jump(self, nums: list)->bool:
-        """
-        55 跳跃游戏：给定一个非负整数数组 nums ，你最初位于数组的 第一个下标 。
-数组中的每个元素代表你在该位置可以跳跃的最大长度。
-判断你是否能够到达最后一个下标。
-        """
-        n = len(nums)
-        idx = 0
-        is_can = False
-        if nums[0] == 0:
-            is_can = False
-        if 0 not in nums:
-            return True
-        while idx < n:
-            if idx + nums[idx] >= n - 1:
-                is_can = True
-                break
-            if nums[idx + nums[idx]] == 0:
-                if False in  [num == 0 for num in nums[idx+1:idx+nums[idx] + 1]]:
-                    idx += 1
-                else:
-                    break
-            else:
-                idx = idx + nums[idx]
-        return is_can
-
 
 
 # head = tail = ListNode(None)
@@ -1657,6 +1607,4 @@ filter, primers = [False for _ in range(n + 1)], []
 #     tail = tail.next
 # head = head.next
 solute = solution()
-print(solute.can_jump([2,3,1,0,4]))
-
-
+print(solute.longest_palindrome_subseq('abab'))
